@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Você decide o futuro da IA</title>
+</head>
+<body>
+    <div class="caixa-principal">
+        <h1>Você decide o futuro da IA</h1>
+        
+        <h2 class="caixa-perguntas" id="pergunta"></h2>
+        
+        <div class="caixa-alternativas" id="alternativas"></div>
+        
+        <div class="caixa-resultado">
+            <p class="texto-resultado" id="resultado"></p>
+        </div>
+    </div>
+
+    <script>
+        const perguntaEl = document.getElementById("pergunta");
+        const alternativasEl = document.getElementById("alternativas");
+        const resultadoEl = document.getElementById("resultado");
+
+        // Lista de perguntas com alternativas e mensagens de resultado
+        const perguntas = [
+            {
+                pergunta: "1. A IA deve ser usada para substituir ou auxiliar os humanos?",
+                alternativas: [
+                    { texto: "Substituir completamente", resultado: "Talvez devêssemos pensar melhor sobre isso." },
+                    { texto: "Auxiliar e colaborar", resultado: "Excelente escolha! A IA deve ajudar, não dominar." },
+                    { texto: "Nenhuma das opções", resultado: "Respeitamos sua opinião. O debate continua!" }
+                ]
+            },
+            {
+                pergunta: "2. A IA pode ter emoções reais?",
+                alternativas: [
+                    { texto: "Sim, como os humanos", resultado: "Na verdade, as emoções da IA são simulações." },
+                    { texto: "Não, apenas simula emoções", resultado: "Correto! A IA não sente, apenas imita." }
+                ]
+            },
+            {
+                pergunta: "3. Qual é o maior risco da IA?",
+                alternativas: [
+                    { texto: "Perda de empregos", resultado: "Esse é um dos impactos mais discutidos." },
+                    { texto: "Domínio das máquinas", resultado: "Essa é uma preocupação, mas ainda distante." },
+                    { texto: "Nada, IA é totalmente segura", resultado: "Cuidado! Todo avanço exige responsabilidade." }
+                ]
+            }
+        ];
+
+        let perguntaAtual = 0;
+
+        function mostrarPergunta() {
+            // Limpa resultado anterior
+            resultadoEl.textContent = "";
+
+            const perguntaObj = perguntas[perguntaAtual];
+            perguntaEl.textContent = perguntaObj.pergunta;
+            alternativasEl.innerHTML = "";
+
+            perguntaObj.alternativas.forEach((alt) => {
+                const botao = document.createElement("button");
+                botao.textContent = alt.texto;
+                botao.onclick = () => {
+                    resultadoEl.textContent = alt.resultado;
+
+                    // Espera 2 segundos antes de passar para a próxima pergunta
+                    setTimeout(() => {
+                        perguntaAtual++;
+                        if (perguntaAtual < perguntas.length) {
+                            mostrarPergunta();
+                        } else {
+                            finalizarQuiz();
+                        }
+                    }, 2000);
+                };
+                alternativasEl.appendChild(botao);
+            });
+        }
+
+        function finalizarQuiz() {
+            perguntaEl.textContent = "";
+            alternativasEl.innerHTML = "";
+            resultadoEl.textContent = "Obrigado por participar do quiz sobre Inteligência Artificial!";
+        }
+
+        // Inicia o quiz
+        mostrarPergunta();
+    </script>
+</body>
+</html>
+
