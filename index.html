@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Você decide o futuro da IA</title>
+
+    <style>
+        #mensagem-final {
+            display: none;
+            margin-top: 20px;
+            font-weight: bold;
+            color: red;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="caixa-principal">
@@ -17,14 +34,18 @@
         <div class="caixa-resultado">
             <p class="texto-resultado" id="resultado"></p>
         </div>
+
+        <p id="mensagem-final"></p>
+        <button id="reiniciar" style="display: none;" onclick="reiniciarQuiz()">Reiniciar Quiz</button>
     </div>
 
     <script>
         const perguntaEl = document.getElementById("pergunta");
         const alternativasEl = document.getElementById("alternativas");
         const resultadoEl = document.getElementById("resultado");
+        const mensagemFinal = document.getElementById("mensagem-final");
+        const reiniciarBtn = document.getElementById("reiniciar");
 
-        // Lista de perguntas com alternativas e mensagens de resultado
         const perguntas = [
             {
                 pergunta: "1. A IA deve ser usada para substituir ou auxiliar os humanos?",
@@ -48,14 +69,40 @@
                     { texto: "Domínio das máquinas", resultado: "Essa é uma preocupação, mas ainda distante." },
                     { texto: "Nada, IA é totalmente segura", resultado: "Cuidado! Todo avanço exige responsabilidade." }
                 ]
+            },
+            {
+                pergunta: "4. A IA deve ter direitos como os seres humanos?",
+                alternativas: [
+                    { texto: "Sim, se forem conscientes", resultado: "Ainda não temos IA consciente. Direitos são um tema complexo." },
+                    { texto: "Não, pois são apenas programas", resultado: "Correto! A IA não possui consciência ou desejos reais." },
+                    { texto: "Talvez no futuro", resultado: "Essa é uma questão ética que ainda será muito debatida." }
+                ]
+            },
+            {
+                pergunta: "5. Qual setor mais se beneficia da IA atualmente?",
+                alternativas: [
+                    { texto: "Saúde", resultado: "Sim! A IA ajuda em diagnósticos, pesquisas e tratamentos." },
+                    { texto: "Entretenimento", resultado: "Correto também! Ela personaliza conteúdos e cria novas experiências." },
+                    { texto: "Todos os setores", resultado: "Exatamente! A IA impacta diversas áreas simultaneamente." }
+                ]
+            },
+            {
+                pergunta: "6. A IA pode tomar decisões éticas sozinha?",
+                alternativas: [
+                    { texto: "Sim, com algoritmos avançados", resultado: "Ela pode simular, mas decisões éticas requerem julgamento humano." },
+                    { texto: "Não, falta consciência moral", resultado: "Perfeito! Julgamento moral é algo exclusivamente humano." },
+                    { texto: "Depende da situação", resultado: "Essa é uma boa reflexão. Muitos casos exigem supervisão humana." }
+                ]
             }
         ];
 
         let perguntaAtual = 0;
 
         function mostrarPergunta() {
-            // Limpa resultado anterior
             resultadoEl.textContent = "";
+            mensagemFinal.style.display = "none";
+            mensagemFinal.style.opacity = 0;
+            reiniciarBtn.style.display = "none";
 
             const perguntaObj = perguntas[perguntaAtual];
             perguntaEl.textContent = perguntaObj.pergunta;
@@ -66,8 +113,6 @@
                 botao.textContent = alt.texto;
                 botao.onclick = () => {
                     resultadoEl.textContent = alt.resultado;
-
-                    // Espera 2 segundos antes de passar para a próxima pergunta
                     setTimeout(() => {
                         perguntaAtual++;
                         if (perguntaAtual < perguntas.length) {
@@ -85,11 +130,21 @@
             perguntaEl.textContent = "";
             alternativasEl.innerHTML = "";
             resultadoEl.textContent = "Obrigado por participar do quiz sobre Inteligência Artificial!";
+
+            mensagemFinal.textContent = "A IA não veio para substituir o homem, mas sim para facilitar a nossa capacidade de criação e também ajudar durante o dia a dia. Muitos veem ela como algo assustador, mas na verdade é maravilhoso!!";
+            mensagemFinal.style.display = "block";
+            void mensagemFinal.offsetWidth;
+            mensagemFinal.style.animation = "fadeIn 2s forwards";
+
+            reiniciarBtn.style.display = "block";
         }
 
-        // Inicia o quiz
+        function reiniciarQuiz() {
+            perguntaAtual = 0;
+            mostrarPergunta();
+        }
+
         mostrarPergunta();
     </script>
 </body>
 </html>
-
